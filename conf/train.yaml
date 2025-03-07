@@ -22,8 +22,8 @@ hydra:
     nodes: 1
     tasks_per_node: 1
     cpus_per_task: 8
-    mem_gb: 512
-    gres: "gpu:h100:1"
+    mem_gb: 48
+    gres: "gpu:a6000:1"
     timeout_min: 2880
     setup: ["export DEBUGVAR=$(scontrol show hostnames $SLURM_JOB_NODELIST)",
             export MASTER_ADDR="$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)",
@@ -33,7 +33,7 @@ training:
   seed: 0
   epochs: 100
   batch_size: 32 # should >= nodes * tasks_per_node
-  save_every_x_epoch: 1
+  save_every_x_epoch: 10
   reconstruct_every_x_batch: 500
   num_reconstruct_samples: 6
   encoder_lr: 1e-6
@@ -55,7 +55,7 @@ num_action_repeat: 1
 proprio_emb_dim: 10 
 num_proprio_repeat: 1
 
-num_hist: 3
+num_hist: 1
 num_pred: 1 # only supports 1
 has_predictor: True # set this to False for only training a decoder
 has_decoder: True # set this to False for only training a predictor
